@@ -1,13 +1,23 @@
 CC = clang
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -Iinclude
+LDFLAGS = -lpthread
 
-all: server
+SRC_DIR = src
+BIN_DIR = bin
 
-%.o: %.c 
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(SRCS:.c=.o)
+
+TARGET = $(BIN_DIR)/server
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
-server: server.o threadpool.o http.o error.o
-	$(CC) $(CFLAGS)	$^ -o $@ -lpthread
-
+	
 clean:
-	rm -f *.o server
+	rm -f $(SRC_DIR)/*.o $(TARGET)

@@ -22,7 +22,9 @@ void *handle_client(int client_fd){
     }
     
     char *mime_type = "text/plain";
-    char *target_file = route + 1;
+    
+    char target_file[1024];
+    snprintf(target_file, sizeof(target_file), "./public%s", route);
     int file_fd = open(target_file, O_RDONLY);
 
     if (strstr(target_file, ".html")) {
