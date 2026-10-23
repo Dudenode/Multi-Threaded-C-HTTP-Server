@@ -1,0 +1,10 @@
+# Compilation artifacts
+*.o
+bin/server
+
+# OS metadata
+*Zone.Identifier
+
+# Python virtual environment (if present)
+venv/
+__pycache__/
